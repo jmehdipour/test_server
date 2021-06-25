@@ -38,7 +38,7 @@ async def validation_exception_handler(request, exc):
 
 @app.middleware("http")
 async def http_middleware(request: Request, call_next):
-    if get_user_error_count(request) > 15:
+    if get_user_error_count(request) > get_settings().error_limit_per_hour:
         return JSONResponse(
             status_code=403,
             content={"detail": "You are not allowed Because of make many errors"}
